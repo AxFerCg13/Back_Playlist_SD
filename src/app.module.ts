@@ -9,18 +9,20 @@ import { PlaylistService } from './playlist/playlist.service';
 import { PlaylistController } from './playlist/playlist.controller';
 import { CancionService } from './cancion/cancion.service';
 import { CancionController } from './cancion/cancion.controller';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT, 10),
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      entities: [Usuario, Playlist, Cancion],
-      synchronize: false, // Para desarrollo, poner en false en producción
+      type: 'mariadb',
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT,
+      database: process.env.DB_NAME,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      autoLoadEntities: true,
+      synchronize: true,
     }),
     TypeOrmModule.forFeature([Usuario, Playlist, Cancion]),
   ],
