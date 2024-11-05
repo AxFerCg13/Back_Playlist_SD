@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-
+import { faker } from '@faker-js/faker';
 @Entity('Usuario') // Especifica el nombre de la tabla
 export class Usuario {
   @PrimaryGeneratedColumn()
