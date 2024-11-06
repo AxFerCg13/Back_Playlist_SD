@@ -13,7 +13,9 @@ export class UsuarioService {
 
   // Crear un nuevo usuario
   async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
-    return this.usuarioRepository.save(createUsuarioDto);
+    const usuario = await this.usuarioRepository.create(createUsuarioDto);
+    this.usuarioRepository.save(usuario);
+    return usuario;
   }
 
   // Obtener todos los usuarios
