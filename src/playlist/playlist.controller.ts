@@ -1,14 +1,15 @@
 import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { PlaylistService } from './playlist.service';
 import { Playlist } from '../entities/playlist.entity';
+import { CreatePlaylistDto } from './dto/create-playlist-dto';
 
 @Controller('playlists')
 export class PlaylistController {
-  constructor(private readonly playlistService: PlaylistService) {}
+  constructor(private readonly playlistService: PlaylistService) { }
 
   @Post()
-  create(@Body() playlist: Playlist) {
-    return this.playlistService.create(playlist);
+  create(@Body() createPlaylistDto: CreatePlaylistDto) {
+    return this.playlistService.create(createPlaylistDto);
   }
 
   @Get()

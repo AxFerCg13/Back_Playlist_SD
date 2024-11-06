@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { faker } from '@faker-js/faker';
+import { Playlist } from './playlist.entity';
 @Entity('Usuario') // Especifica el nombre de la tabla
 export class Usuario {
   @PrimaryGeneratedColumn()
@@ -19,4 +20,7 @@ export class Usuario {
 
   @Column({ type: 'date', default: () => 'CURRENT_DATE' }) // Usando la fecha actual como valor por defecto
   fecha_creacion: Date;
+
+  @OneToMany(() => Playlist, (Playlist) => Playlist.usuario, {})
+  playlist: number;
 }

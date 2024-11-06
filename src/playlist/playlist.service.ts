@@ -2,17 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Playlist } from '../entities/playlist.entity';
+import { CreatePlaylistDto } from './dto/create-playlist-dto';
 
 @Injectable()
 export class PlaylistService {
   constructor(
     @InjectRepository(Playlist)
     private playlistRepository: Repository<Playlist>,
-  ) {}
+  ) { }
 
   // Crear una nueva playlist
-  async create(playlist: Playlist): Promise<Playlist> {
-    return this.playlistRepository.save(playlist);
+  async create(createPlaylistDto: CreatePlaylistDto) {
+    return await this.playlistRepository.create(createPlaylistDto);
   }
 
   // Obtener todas las playlists
