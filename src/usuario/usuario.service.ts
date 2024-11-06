@@ -1,10 +1,11 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
 import { Usuario } from '../entities/usuario.entity';
 import { CreateUsuarioDto } from './dto/create-usuario-dto';
 import { BcryptService } from 'src/common/providers/bcrypt.service';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class UsuarioService {
@@ -36,9 +37,9 @@ export class UsuarioService {
   }
 
   // Obtener un usuario por ID
-  async findOne(id: number): Promise<Usuario> {
+  async findOne(id: number): Promise<Object> {
     try {
-      return this.usuarioRepository.findOne({
+      const usuario = await this.usuarioRepository.findOne({
         where: { id }, select: {
           id: true,
           nombre: true,
@@ -46,13 +47,18 @@ export class UsuarioService {
           correo: true,
         }
       });
+      if (usuario) {
+        return { data: usuario }
+      } else {
+        throw new NotFoundException(`El usuario con el id: ${id} no existe`)
+      }
     } catch (err) {
       this.handleErrors(err);
     }
   }
 
   // Actualizar un usuario
-  async update(id: number, usuario: Partial<Usuario>): Promise<Usuario> {
+  async update(id: number, usuario: Partial<Usuario>) {
     await this.usuarioRepository.update(id, usuario);
     return this.findOne(id);
   }
@@ -66,6 +72,9 @@ export class UsuarioService {
     this.logger.error(err)
     if (err.errno) {
       throw new BadRequestException(err.sqlMessage);
+    }
+    if (err.response.statusCode === 404) {
+      throw new NotFoundException(err.response.message)
     }
   }
 }
