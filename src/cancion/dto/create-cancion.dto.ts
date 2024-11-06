@@ -17,7 +17,4 @@ export class CreateCancionDto {
     @IsOptional()
     disco?: string;
 
-    @IsNumber()
-    @IsNotEmpty()
-    idPlaylist: number;
 }

@@ -24,7 +24,7 @@ export class Playlist {
   usuario: Usuario;
 
   @OneToMany(() => Cancion, (Cancion) => Cancion.playlist, {})
-  cancion: number;
+  cancion: Cancion;
 }
 
 

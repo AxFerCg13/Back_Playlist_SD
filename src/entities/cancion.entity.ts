@@ -25,5 +25,5 @@ export class Cancion {
   fechaAgregada: Date;
 
   @ManyToOne(() => Playlist, (Playlist) => Playlist.cancion, {})
-  playlist: number;
+  playlist: Playlist;
 }
