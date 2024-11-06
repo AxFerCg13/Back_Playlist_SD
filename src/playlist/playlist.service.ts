@@ -13,7 +13,9 @@ export class PlaylistService {
 
   // Crear una nueva playlist
   async create(createPlaylistDto: CreatePlaylistDto) {
-    return await this.playlistRepository.create(createPlaylistDto);
+    const playlist = await this.playlistRepository.create(createPlaylistDto);
+    this.playlistRepository.save(createPlaylistDto);
+    return playlist;
   }
 
   // Obtener todas las playlists
