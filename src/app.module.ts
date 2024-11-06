@@ -10,19 +10,21 @@ import { PlaylistController } from './playlist/playlist.controller';
 import { CancionService } from './cancion/cancion.service';
 import { CancionController } from './cancion/cancion.controller';
 import { ConfigModule } from '@nestjs/config';
+import { faker } from '@faker-js/faker';
+
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mariadb',
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT, 10),
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      entities: [Usuario, Playlist, Cancion],
-      synchronize: true, // Para desarrollo, poner en false en producción
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT,
+      database: process.env.DB_NAME,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      autoLoadEntities: true,
+      synchronize: true,
     }),
     TypeOrmModule.forFeature([Usuario, Playlist, Cancion]),
   ],
