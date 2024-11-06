@@ -10,5 +10,5 @@ export class CreatePlaylistDto {
     generos: string;
 
     @IsNumber()
-    id_usuario: number;
+    idUsuario: number;
 }

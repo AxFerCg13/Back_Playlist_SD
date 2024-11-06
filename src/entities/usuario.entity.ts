@@ -19,7 +19,7 @@ export class Usuario {
   generos: string;
 
   @Column({ type: 'date', default: () => 'CURRENT_DATE' }) // Usando la fecha actual como valor por defecto
-  fecha_creacion: Date;
+  fechaCreacion: Date;
 
   @OneToMany(() => Playlist, (Playlist) => Playlist.usuario, {})
   playlist: number;

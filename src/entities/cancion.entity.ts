@@ -13,7 +13,7 @@ export class Cancion {
   artista: string;
 
   @Column({ type: 'date', nullable: false })
-  año_salida: Date;
+  añoSalida: Date;
 
   @Column({ nullable: true })
   disco: string;
@@ -22,9 +22,8 @@ export class Cancion {
   status: string;
 
   @Column({ type: 'date', default: () => 'CURRENT_DATE' })
-  fecha_agregada: Date;
+  fechaAgregada: Date;
 
-  @ManyToOne(() => Playlist)
-  @JoinColumn({ name: 'id_playlist' }) // Asegúrate de que coincida con el nombre de la columna en la BD
-  id_playlist: Playlist;
+  @ManyToOne(() => Playlist, (Playlist) => Playlist.cancion, {})
+  playlist: number;
 }

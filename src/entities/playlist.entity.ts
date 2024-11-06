@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Usuario } from './usuario.entity';
+import { Cancion } from './cancion.entity';
 
 @Entity('Playlist')
 export class Playlist {
@@ -10,7 +11,7 @@ export class Playlist {
   titulo: string;
 
   @Column({ type: 'timestamp', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
-  fecha_creacion: Date;
+  fechaCreacion: Date;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   generos: string;
@@ -22,6 +23,8 @@ export class Playlist {
   @ManyToOne(() => Usuario, (Usuario) => Usuario.playlist, {})
   usuario: number;
 
+  @OneToMany(() => Cancion, (Cancion) => Cancion.playlist, {})
+  cancion: number;
 }
 
 
