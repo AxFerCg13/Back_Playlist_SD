@@ -1,24 +1,27 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+
 import { Repository } from 'typeorm';
 import { Usuario } from '../entities/usuario.entity';
 import { CreateUsuarioDto } from './dto/create-usuario-dto';
 
 @Injectable()
 export class UsuarioService {
+  private readonly logger = new Logger();
   constructor(
     @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>,
   ) { }
 
   // Crear un nuevo usuario
-  async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
+  async create(createUsuarioDto: CreateUsuarioDto) {
     try {
-      const usuario = await this.usuarioRepository.create(createUsuarioDto);
-      this.usuarioRepository.save(usuario);
-      return usuario;
+      let usuario;
+      usuario = await this.usuarioRepository.create(createUsuarioDto);
+      usuario = await this.usuarioRepository.save(usuario)
+      return { data: usuario }
     } catch (err) {
-      console.log(err);
+      this.handleErrors(err)
     }
   }
 
@@ -39,7 +42,7 @@ export class UsuarioService {
         }
       });
     } catch (err) {
-      console.log(err);
+      this.handleErrors(err);
     }
   }
 
@@ -52,5 +55,12 @@ export class UsuarioService {
   // Eliminar un usuario
   async remove(id: number): Promise<void> {
     await this.usuarioRepository.delete(id);
+  }
+
+  private handleErrors(err: any) {
+    this.logger.error(err)
+    if (err.errno) {
+      throw new BadRequestException(err.sqlMessage);
+    }
   }
 }

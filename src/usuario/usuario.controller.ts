@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { Usuario } from '../entities/usuario.entity';
 import { CreateUsuarioDto } from './dto/create-usuario-dto';
@@ -10,7 +10,7 @@ export class UsuarioController {
   //* Create one user
   @Post()
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
-    this.usuarioService.create(createUsuarioDto);
+    return this.usuarioService.create(createUsuarioDto);
   }
 
   @Get()
@@ -20,7 +20,7 @@ export class UsuarioController {
 
   //* Return one user
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.usuarioService.findOne(id);
   }
 
