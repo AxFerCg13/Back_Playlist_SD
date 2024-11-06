@@ -10,6 +10,8 @@ import { PlaylistController } from './playlist/playlist.controller';
 import { CancionService } from './cancion/cancion.service';
 import { CancionController } from './cancion/cancion.controller';
 import { ConfigModule } from '@nestjs/config';
+import { faker } from '@faker-js/faker';
+
 
 @Module({
   imports: [
@@ -29,4 +31,4 @@ import { ConfigModule } from '@nestjs/config';
   controllers: [UsuarioController, PlaylistController, CancionController],
   providers: [UsuarioService, PlaylistService, CancionService],
 })
-export class AppModule {}
+export class AppModule { }
