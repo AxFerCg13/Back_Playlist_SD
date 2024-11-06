@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Playlist } from '../entities/playlist.entity';
@@ -6,16 +6,21 @@ import { CreatePlaylistDto } from './dto/create-playlist-dto';
 
 @Injectable()
 export class PlaylistService {
+  private readonly logger = new Logger();
   constructor(
     @InjectRepository(Playlist)
     private playlistRepository: Repository<Playlist>,
   ) { }
 
   // Crear una nueva playlist
-  async create(createPlaylistDto: CreatePlaylistDto) {
-    const playlist = await this.playlistRepository.create(createPlaylistDto);
-    this.playlistRepository.save(createPlaylistDto);
-    return playlist;
+  async create(idUsuario: number, createPlaylistDto: CreatePlaylistDto) {
+    try {
+      const playlist = this.playlistRepository.create({ ...createPlaylistDto, usuario: { id: idUsuario } });
+      await this.playlistRepository.save(playlist);
+      return playlist;
+    } catch (err) {
+      this.handleErrors(err);
+    }
   }
 
   // Obtener todas las playlists
@@ -37,5 +42,12 @@ export class PlaylistService {
   // Eliminar una playlist
   async remove(id: number): Promise<void> {
     await this.playlistRepository.delete(id);
+  }
+
+  handleErrors(err: any) {
+    this.logger.error(err)
+    if (err.code) {
+      throw new BadRequestException(err.sqlMessage)
+    }
   }
 }

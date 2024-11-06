@@ -21,7 +21,7 @@ export class Playlist {
 
   // Definición de la relación ManyToOne con Usuario
   @ManyToOne(() => Usuario, (Usuario) => Usuario.playlist, {})
-  usuario: number;
+  usuario: Usuario;
 
   @OneToMany(() => Cancion, (Cancion) => Cancion.playlist, {})
   cancion: number;

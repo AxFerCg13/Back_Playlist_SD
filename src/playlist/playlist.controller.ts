@@ -3,31 +3,38 @@ import { PlaylistService } from './playlist.service';
 import { Playlist } from '../entities/playlist.entity';
 import { CreatePlaylistDto } from './dto/create-playlist-dto';
 
-@Controller('playlists')
+@Controller('usuarios/:idUsuario')
 export class PlaylistController {
   constructor(private readonly playlistService: PlaylistService) { }
 
-  @Post()
-  create(@Body() createPlaylistDto: CreatePlaylistDto) {
-    return this.playlistService.create(createPlaylistDto);
+  //* Crear una playlist para un usuario
+  @Post('playlists')
+  create(
+    @Param('idUsuario', ParseIntPipe) idUsuario: number,
+    @Body() createPlaylistDto: CreatePlaylistDto) {
+    return this.playlistService.create(idUsuario, createPlaylistDto);
   }
 
-  @Get()
+  //* Returnar las playlist de un usuario
+  @Get('playlists')
   findAll() {
     return this.playlistService.findAll();
   }
 
-  @Get(':id')
+  //* Retornar una playlist de un usuario
+  @Get('playlists/:idPlaylist')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.playlistService.findOne(id);
   }
 
-  @Put(':id')
+  //* Actualizar los datos de una playlist de un usuario
+  @Put('playlists/:idPlaylist')
   update(@Param('id') id: number, @Body() playlist: Partial<Playlist>) {
     return this.playlistService.update(id, playlist);
   }
 
-  @Delete(':id')
+  //* Eliminar una playlist de un usuario
+  @Delete('playlists/:idPlaylist')
   remove(@Param('id') id: number) {
     return this.playlistService.remove(id);
   }

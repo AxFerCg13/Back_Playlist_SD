@@ -8,7 +8,4 @@ export class CreatePlaylistDto {
     @IsString()
     @IsNotEmpty()
     generos: string;
-
-    @IsNumber()
-    idUsuario: number;
 }

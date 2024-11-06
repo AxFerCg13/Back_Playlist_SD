@@ -19,18 +19,18 @@ export class UsuarioController {
   }
 
   //* Return one user
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.usuarioService.findOne(id);
+  @Get(':idUsuario')
+  findOne(@Param('idUsuario', ParseIntPipe) idUsuario: number) {
+    return this.usuarioService.findOne(idUsuario);
   }
 
-  @Put(':id')
-  update(@Param('id') id: number, @Body() usuario: Partial<Usuario>) {
-    return this.usuarioService.update(id, usuario);
+  @Put(':idUsuario')
+  update(@Param('idUsuario') idUsuario: number, @Body() usuario: Partial<Usuario>) {
+    return this.usuarioService.update(idUsuario, usuario);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.usuarioService.remove(id);
+  @Delete(':idUsuario')
+  remove(@Param('idUsuario') idUsuario: number) {
+    return this.usuarioService.remove(idUsuario);
   }
 }

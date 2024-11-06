@@ -21,5 +21,5 @@ export class Usuario {
   fechaCreacion: Date;
 
   @OneToMany(() => Playlist, (Playlist) => Playlist.usuario, {})
-  playlist: number;
+  playlist: Playlist;
 }
