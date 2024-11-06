@@ -13,9 +13,13 @@ export class UsuarioService {
 
   // Crear un nuevo usuario
   async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
-    const usuario = await this.usuarioRepository.create(createUsuarioDto);
-    this.usuarioRepository.save(usuario);
-    return usuario;
+    try {
+      const usuario = await this.usuarioRepository.create(createUsuarioDto);
+      this.usuarioRepository.save(usuario);
+      return usuario;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   // Obtener todos los usuarios
@@ -25,7 +29,18 @@ export class UsuarioService {
 
   // Obtener un usuario por ID
   async findOne(id: number): Promise<Usuario> {
-    return this.usuarioRepository.findOne({ where: { id } });
+    try {
+      return this.usuarioRepository.findOne({
+        where: { id }, select: {
+          id: true,
+          nombre: true,
+          generos: true,
+          correo: true,
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   // Actualizar un usuario

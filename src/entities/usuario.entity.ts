@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { faker } from '@faker-js/faker';
 import { Playlist } from './playlist.entity';
 @Entity('Usuario') // Especifica el nombre de la tabla
 export class Usuario {
