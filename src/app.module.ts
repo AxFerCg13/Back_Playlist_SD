@@ -22,15 +22,11 @@ import { ConfigModule } from '@nestjs/config';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [Usuario, Playlist, Cancion],
-      synchronize: false, // Para desarrollo, poner en false en producción
+      synchronize: true, // Para desarrollo, poner en false en producción
     }),
     TypeOrmModule.forFeature([Usuario, Playlist, Cancion]),
   ],
   controllers: [UsuarioController, PlaylistController, CancionController],
   providers: [UsuarioService, PlaylistService, CancionService],
 })
-export class AppModule {
-  constructor(){
-    console.log(process.env.DATABASE_HOST)
-  }
-}
+export class AppModule { }
