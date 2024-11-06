@@ -11,6 +11,7 @@ import { CancionService } from './cancion/cancion.service';
 import { CancionController } from './cancion/cancion.controller';
 import { ConfigModule } from '@nestjs/config';
 import { faker } from '@faker-js/faker';
+import { CommonModule } from './common/common.module';
 
 
 @Module({
@@ -27,6 +28,7 @@ import { faker } from '@faker-js/faker';
       synchronize: true,
     }),
     TypeOrmModule.forFeature([Usuario, Playlist, Cancion]),
+    CommonModule,
   ],
   controllers: [UsuarioController, PlaylistController, CancionController],
   providers: [UsuarioService, PlaylistService, CancionService],
