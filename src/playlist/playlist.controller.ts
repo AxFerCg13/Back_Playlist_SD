@@ -25,8 +25,10 @@ export class PlaylistController {
 
   //* Retornar una playlist de un usuario
   @Get('playlists/:idPlaylist')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.playlistService.findOne(id);
+  findOne(
+    @Param('idUsuario', ParseIntPipe) idUsuario: number,
+    @Param('idPlaylist', ParseIntPipe) idPlaylist: number) {
+    return this.playlistService.findOne(idUsuario, idPlaylist);
   }
 
   //* Actualizar los datos de una playlist de un usuario

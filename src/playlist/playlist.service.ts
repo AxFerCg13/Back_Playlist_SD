@@ -34,14 +34,19 @@ export class PlaylistService {
   }
 
   // Obtener una playlist por ID
-  async findOne(id: number): Promise<Playlist> {
-    return this.playlistRepository.findOne({ where: { id } });
+  async findOne(idUsuario: number, idPlaylist): Promise<Object> {
+    try {
+      const playlist = await this.playlistRepository.findOne({ where: { id: idPlaylist, usuario: { id: idUsuario } } });
+      return { data: playlist };
+    } catch (err) {
+      this.handleErrors(err);
+    }
   }
 
   // Actualizar una playlist
-  async update(id: number, playlist: Partial<Playlist>): Promise<Playlist> {
+  async update(id: number, playlist: Partial<Playlist>) {
     await this.playlistRepository.update(id, playlist);
-    return this.findOne(id);
+    // return this.findOne(id);
   }
 
   // Eliminar una playlist
