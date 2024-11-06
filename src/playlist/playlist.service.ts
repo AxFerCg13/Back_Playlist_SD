@@ -17,15 +17,20 @@ export class PlaylistService {
     try {
       const playlist = this.playlistRepository.create({ ...createPlaylistDto, usuario: { id: idUsuario } });
       await this.playlistRepository.save(playlist);
-      return playlist;
+      return { data: playlist };
     } catch (err) {
       this.handleErrors(err);
     }
   }
 
   // Obtener todas las playlists
-  async findAll(): Promise<Playlist[]> {
-    return this.playlistRepository.find();
+  async findAll(idUsuario: number): Promise<Object> {
+    try {
+      const playlists = await this.playlistRepository.find({ where: { usuario: { id: idUsuario } } })
+      return { data: playlists }
+    } catch (err) {
+      this.handleErrors(err)
+    }
   }
 
   // Obtener una playlist por ID

@@ -17,8 +17,10 @@ export class PlaylistController {
 
   //* Returnar las playlist de un usuario
   @Get('playlists')
-  findAll() {
-    return this.playlistService.findAll();
+  findAll(
+    @Param('idUsuario', ParseIntPipe) idUsuario: number,
+  ) {
+    return this.playlistService.findAll(idUsuario);
   }
 
   //* Retornar una playlist de un usuario
