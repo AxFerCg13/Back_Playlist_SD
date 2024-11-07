@@ -12,6 +12,7 @@ import { CancionController } from './cancion/cancion.controller';
 import { ConfigModule } from '@nestjs/config';
 import { faker } from '@faker-js/faker';
 import { CommonModule } from './common/common.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -29,6 +30,7 @@ import { CommonModule } from './common/common.module';
     }),
     TypeOrmModule.forFeature([Usuario, Playlist, Cancion]),
     CommonModule,
+    AuthModule,
   ],
   controllers: [UsuarioController, PlaylistController, CancionController],
   providers: [UsuarioService, PlaylistService, CancionService],
