@@ -39,7 +39,9 @@ export class PlaylistController {
 
   //* Eliminar una playlist de un usuario
   @Delete('playlists/:idPlaylist')
-  remove(@Param('id') id: number) {
-    return this.playlistService.remove(id);
+  remove(
+    @Param('idUsuario', ParseIntPipe) idUsuario: number,
+    @Param('idPlaylist', ParseIntPipe) idPlaylist: number) {
+    return this.playlistService.remove(idUsuario, idPlaylist);
   }
 }

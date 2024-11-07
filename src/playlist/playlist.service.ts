@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Playlist } from '../entities/playlist.entity';
@@ -50,8 +50,17 @@ export class PlaylistService {
   }
 
   // Eliminar una playlist
-  async remove(id: number): Promise<void> {
-    await this.playlistRepository.delete(id);
+  async remove(idUsuario: number, idPlaylist: number): Promise<Object> {
+    try {
+      const playlist = await this.playlistRepository.delete({ id: idPlaylist, usuario: { id: idUsuario } });
+      if (playlist.affected !== 0) {
+        return { data: { "affected": playlist.affected } }
+      } else {
+        throw new NotFoundException(`Playlist con el id: ${idPlaylist} no existe`);
+      }
+    } catch (err) {
+      this.handleErrors(err);
+    }
   }
 
   handleErrors(err: any) {
