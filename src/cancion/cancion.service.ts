@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Cancion } from '../entities/cancion.entity';
 import { CreateCancionDto } from './dto/create-cancion.dto';
-import { T } from '@faker-js/faker/dist/airline-BLb3y-7w';
 
 @Injectable()
 export class CancionService {
@@ -46,8 +45,17 @@ export class CancionService {
   }
 
   // Eliminar una canción
-  async remove(id: number): Promise<void> {
-    await this.cancionRepository.delete(id);
+  async remove(idPlaylist: number, idCancion: number): Promise<Object> {
+    try {
+      const cancionRemoved = await this.cancionRepository.delete({ id: idCancion, playlist: { id: idPlaylist } });
+      if (cancionRemoved.affected !== 0) {
+        return { data: { "affected": cancionRemoved.affected } }
+      } else {
+        throw new NotFoundException(`Canción con el id: ${idCancion} no existe`);
+      }
+    } catch (err) {
+      this.handleErrors(err);
+    }
   }
 
   private handleErrors(err: any) {

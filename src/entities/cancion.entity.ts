@@ -13,7 +13,7 @@ export class Cancion {
   artista: string;
 
   @Column({ type: 'date', nullable: false })
-  añoSalida: Date;
+  anioSalida: Date;
 
   @Column({ nullable: true })
   disco: string;
@@ -24,6 +24,6 @@ export class Cancion {
   @Column({ type: 'date', default: () => 'CURRENT_DATE' })
   fechaAgregada: Date;
 
-  @ManyToOne(() => Playlist, (Playlist) => Playlist.cancion, {})
+  @ManyToOne(() => Playlist, (Playlist) => Playlist.cancion, { onDelete: "CASCADE" })
   playlist: Playlist;
 }

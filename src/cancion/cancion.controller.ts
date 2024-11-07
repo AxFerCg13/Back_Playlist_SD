@@ -34,8 +34,11 @@ export class CancionController {
     return this.cancionService.update(id, cancion);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.cancionService.remove(id);
+  //* Eliminar una canción de una playlist
+  @Delete(':idCancion')
+  remove(
+    @Param('idPlaylist', ParseIntPipe) idPlaylis: number,
+    @Param('idCancion', ParseIntPipe) idCancion: number) {
+    return this.cancionService.remove(idPlaylis, idCancion);
   }
 }
