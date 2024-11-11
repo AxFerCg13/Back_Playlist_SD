@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Playlist } from './playlist.entity';
+
 @Entity('Usuario') // Especifica el nombre de la tabla
 export class Usuario {
   @PrimaryGeneratedColumn()
