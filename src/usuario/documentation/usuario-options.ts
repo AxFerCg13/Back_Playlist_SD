@@ -1,14 +1,9 @@
 import { ApiPropertyOptions } from "@nestjs/swagger";
-import { faker } from '@faker-js/faker';
-
-const name = faker.person.fullName();
-const correo = faker.internet.email().toLowerCase();
-const contrasena = faker.internet.password();
-const generos = faker.music.genre();
+import { contrasena, correo, generos, nombre } from "./faker/usuario-faker";
 
 export const nombreOptions: ApiPropertyOptions = {
     description: "Nombre del usuario",
-    example: name,
+    example: nombre,
     type: "string",
     nullable: false
 }

@@ -2,12 +2,16 @@ import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@
 import { UsuarioService } from './usuario.service';
 import { Usuario } from '../entities/usuario.entity';
 import { CreateUsuarioDto } from './dto/create-usuario-dto';
+import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { create201, createSummary } from './documentation/usuario-paths-options';
 
 @Controller('usuarios')
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) { }
 
   //* Create one user
+  @ApiOperation(createSummary)
+  @ApiResponse(create201)
   @Post()
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
     return this.usuarioService.create(createUsuarioDto);
