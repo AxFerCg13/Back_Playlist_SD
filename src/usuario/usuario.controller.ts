@@ -3,7 +3,7 @@ import { UsuarioService } from './usuario.service';
 import { Usuario } from '../entities/usuario.entity';
 import { CreateUsuarioDto } from './dto/create-usuario-dto';
 import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
-import { create201, createSummary } from './documentation/usuario-paths-options';
+import { create201, create400, createSummary, getUsuario200, getUsuario404, getUsuarioSummary, idUsuario } from './documentation/usuario-paths-options';
 
 @Controller('usuarios')
 export class UsuarioController {
@@ -12,6 +12,7 @@ export class UsuarioController {
   //* Create one user
   @ApiOperation(createSummary)
   @ApiResponse(create201)
+  @ApiResponse(create400)
   @Post()
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
     return this.usuarioService.create(createUsuarioDto);
@@ -23,6 +24,10 @@ export class UsuarioController {
   }
 
   //* Return one user
+  @ApiOperation(getUsuarioSummary)
+  @ApiParam(idUsuario)
+  @ApiResponse(getUsuario200)
+  @ApiResponse(getUsuario404)
   @Get(':idUsuario')
   findOne(@Param('idUsuario', ParseIntPipe) idUsuario: number) {
     return this.usuarioService.findOne(idUsuario);
