@@ -6,6 +6,7 @@ import { Usuario } from '../entities/usuario.entity';
 import { CreateUsuarioDto } from './dto/create-usuario-dto';
 import { BcryptService } from 'src/common/providers/bcrypt.service';
 import { NotFoundError } from 'rxjs';
+import { contrasena } from './documentation/faker/usuario-faker';
 
 @Injectable()
 export class UsuarioService {
@@ -25,7 +26,13 @@ export class UsuarioService {
         usuario.contrasena = await this.bcryptService.encryptPassword(createUsuarioDto.contrasena);
         usuario = await this.usuarioRepository.save(usuario);
       }
-      return { data: usuario }
+
+      delete usuario.contrasena;
+      return {
+        message: "Usuario creado",
+        statusCode: 201,
+        data: usuario
+      }
     } catch (err) {
       this.handleErrors(err)
     }
@@ -45,10 +52,15 @@ export class UsuarioService {
           nombre: true,
           generos: true,
           correo: true,
+          fechaCreacion: true
         }
       });
       if (usuario) {
-        return { data: usuario }
+        return {
+          message: "Datos usuario",
+          statusCode: 200,
+          data: usuario
+        }
       } else {
         throw new NotFoundException(`El usuario con el id: ${id} no existe`)
       }
