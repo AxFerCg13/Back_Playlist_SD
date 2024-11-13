@@ -17,7 +17,12 @@ export class PlaylistService {
     try {
       const playlist = this.playlistRepository.create({ ...createPlaylistDto, usuario: { id: idUsuario } });
       await this.playlistRepository.save(playlist);
-      return { data: playlist };
+      delete playlist.usuario
+      return {
+        message: "Playlist creada",
+        statusCode: 201,
+        data: playlist
+      };
     } catch (err) {
       this.handleErrors(err);
     }

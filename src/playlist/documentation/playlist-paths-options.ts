@@ -5,6 +5,11 @@ import { playlistData } from "./faker/playlist-faker";
 export const idUsuario: ApiParamOptions = { name: "idUsuario", type: Number, description: "Id del usuario", example: 12 }
 
 //* Response Objects
+const response201 = {
+    message: "Playlist creada",
+    statusCode: 201,
+    data: playlistData
+}
 const response400 = {
     message: "Descripción del error",
     error: "Bad Request",
@@ -28,7 +33,7 @@ export const create201: ApiResponseOptions = {
     status: 201,
     description: "Playlist creada",
     schema: {
-        example: playlistData
+        example: response201
     }
 }
 

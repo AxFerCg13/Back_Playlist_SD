@@ -12,7 +12,4 @@ export const playlistData = {
     generos,
     fecha_creacion,
     status: "Active",
-    usuario: {
-        idUsuario
-    }
 }
