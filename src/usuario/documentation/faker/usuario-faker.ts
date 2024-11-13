@@ -8,8 +8,10 @@ export const generos = faker.music.genre();
 export const fecha_creacion = faker.date.between({ from: '2000-01-01', to: Date.now() });
 
 export const usuarioData = {
-    id,
-    nombre,
-    correo,
-    generos,
+    data: {
+        id,
+        nombre,
+        correo,
+        generos,
+    }
 }

@@ -2,12 +2,18 @@ import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@
 import { PlaylistService } from './playlist.service';
 import { Playlist } from '../entities/playlist.entity';
 import { CreatePlaylistDto } from './dto/create-playlist-dto';
+import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { create201, create400, createPlaylistSummary, idUsuario, playlistsSumnary } from './documentation/playlist-paths-options';
 
 @Controller('usuarios/:idUsuario')
 export class PlaylistController {
   constructor(private readonly playlistService: PlaylistService) { }
 
   //* Crear una playlist para un usuario
+  @ApiOperation(createPlaylistSummary)
+  @ApiParam(idUsuario)
+  @ApiResponse(create201)
+  @ApiResponse(create400)
   @Post('playlists')
   create(
     @Param('idUsuario', ParseIntPipe) idUsuario: number,
@@ -15,7 +21,8 @@ export class PlaylistController {
     return this.playlistService.create(idUsuario, createPlaylistDto);
   }
 
-  //* Returnar las playlist de un usuario
+  //* Retornar las playlists de un usuario
+  @ApiOperation(playlistsSumnary)
   @Get('playlists')
   findAll(
     @Param('idUsuario', ParseIntPipe) idUsuario: number,
