@@ -26,5 +26,5 @@ export const generosOptions: ApiPropertyOptions = {
     description: "Contraseña del usuario",
     example: generos,
     type: "string",
-    nullable: false
+    nullable: true
 }

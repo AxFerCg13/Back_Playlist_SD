@@ -38,11 +38,6 @@ export class UsuarioService {
     }
   }
 
-  // Obtener todos los usuarios
-  async findAll(): Promise<Usuario[]> {
-    return this.usuarioRepository.find();
-  }
-
   // Obtener un usuario por ID
   async findOne(id: number): Promise<Object> {
     try {
@@ -67,12 +62,6 @@ export class UsuarioService {
     } catch (err) {
       this.handleErrors(err);
     }
-  }
-
-  // Actualizar un usuario
-  async update(id: number, usuario: Partial<Usuario>) {
-    await this.usuarioRepository.update(id, usuario);
-    return this.findOne(id);
   }
 
   // Eliminar un usuario

@@ -6,8 +6,16 @@ export const idUsuario: ApiParamOptions = { name: "idUsuario", type: Number, des
 
 //* Response Objects
 
-const response200 = {
+const response201 = {
+    message: "Usuario creado",
+    statusCode: 201,
+    data: usuarioData
+}
 
+const response200 = {
+    message: "Datos usuario",
+    statusCode: 200,
+    data: usuarioData
 }
 const response400 = {
     message: "Descripción del error",
@@ -31,7 +39,7 @@ export const create201: ApiResponseOptions = {
     status: 201,
     description: "Usuario creado",
     schema: {
-        example: usuarioData
+        example: response201
     }
 }
 
@@ -52,7 +60,7 @@ export const getUsuario200: ApiResponseOptions = {
     status: 200,
     description: "Datos de un usuario",
     schema: {
-        example: usuarioData
+        example: response200
     }
 }
 

@@ -18,11 +18,6 @@ export class UsuarioController {
     return this.usuarioService.create(createUsuarioDto);
   }
 
-  @Get()
-  findAll() {
-    return this.usuarioService.findAll();
-  }
-
   //* Return one user
   @ApiOperation(getUsuarioSummary)
   @ApiParam(idUsuario)
@@ -31,11 +26,6 @@ export class UsuarioController {
   @Get(':idUsuario')
   findOne(@Param('idUsuario', ParseIntPipe) idUsuario: number) {
     return this.usuarioService.findOne(idUsuario);
-  }
-
-  @Put(':idUsuario')
-  update(@Param('idUsuario') idUsuario: number, @Body() usuario: Partial<Usuario>) {
-    return this.usuarioService.update(idUsuario, usuario);
   }
 
   @Delete(':idUsuario')
