@@ -1,14 +1,36 @@
 import { ApiOperationOptions, ApiParamOptions, ApiResponseOptions } from "@nestjs/swagger";
-import { playlistData } from "./faker/playlist-faker";
+import { dataPlaylist } from "./faker/playlist-faker";
 
 //* Parametros
-export const idUsuario: ApiParamOptions = { name: "idUsuario", type: Number, description: "Id del usuario", example: 12 }
+export const idUsuario: ApiParamOptions = { name: "idUsuario", type: Number, description: "Id del usuario", example: 1 };
+export const idPlaylist: ApiParamOptions = { name: "idPlaylist", type: Number, description: "Id del usuario", example: 18 };
 
 //* Response Objects
+const { urlImagen, ...dataPlay } = dataPlaylist;
+
+const response200 = {
+    message: "Datos playlist",
+    statusCode: 200,
+    data: [dataPlay]
+}
+
+const responsePlaylist = {
+    message: "Datos playlist",
+    statusCode: 200,
+    data: dataPlaylist
+}
+
+const responseDelete = {
+    message: "Playlist eliminada",
+    statusCode: 200,
+    data: {
+        affected: 1
+    }
+}
 const response201 = {
     message: "Playlist creada",
     statusCode: 201,
-    data: playlistData
+    data: dataPlaylist
 }
 const response400 = {
     message: "Descripción del error",
@@ -39,7 +61,7 @@ export const create201: ApiResponseOptions = {
 
 export const create400: ApiResponseOptions = {
     status: 400,
-    description: "Playlist creada",
+    description: "Bad Request",
     schema: {
         example: response400
     }
@@ -47,14 +69,56 @@ export const create400: ApiResponseOptions = {
 
 //* Retornar las playlist de un usuario
 export const playlistsSumnary: ApiOperationOptions = { summary: "Retornar las playlists de un usuario" }
-const { idPlaylist, titulo } = playlistData;
 export const playlistsUsuario200: ApiResponseOptions = {
     status: 200,
     description: "Playlist de un usuario",
     schema: {
-        example:
-            [
-                { idPlaylist, titulo }
-            ]
+        example: response200
+    }
+}
+
+export const playlistsUsuario404: ApiResponseOptions = {
+    status: 404,
+    description: "Not Found - Usuario no encontrado",
+    schema: {
+        example: response404
+    }
+}
+
+//* Retornar la playlist de un usuario
+export const playlistSumnary: ApiOperationOptions = { summary: "Retornar una playlist de un usuario" };
+
+export const playlistUsuario200: ApiResponseOptions = {
+    status: 200,
+    description: "Playlist de un usuario",
+    schema: {
+        example: responsePlaylist
+    }
+}
+
+export const playlistUsuario404: ApiResponseOptions = {
+    status: 404,
+    description: "Not Found - Playlist no encontrada",
+    schema: {
+        example: response404
+    }
+}
+
+//* Eliminar una playlist de un usuario
+export const deletePlaylistSummary: ApiOperationOptions = { summary: "Eliminar una playlist de un usuario" };
+
+export const deletePlaylist200: ApiResponseOptions = {
+    status: 200,
+    description: "Playlist eliminada",
+    schema: {
+        example: responseDelete
+    }
+}
+
+export const deletePlaylist404: ApiResponseOptions = {
+    status: 404,
+    description: "Not Found - Playlist no encontrada",
+    schema: {
+        example: response404
     }
 }

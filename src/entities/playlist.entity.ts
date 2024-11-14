@@ -16,6 +16,9 @@ export class Playlist {
   @Column({ type: 'varchar', length: 255, nullable: true })
   generos: string;
 
+  @Column({ type: "varchar", nullable: true })
+  urlImagen: string;
+
   @Column({ type: 'varchar', length: 20, nullable: true, default: 'Active' })
   status: string;
 

@@ -28,11 +28,28 @@ export class PlaylistService {
     }
   }
 
-  // Obtener todas las playlists
+  //* Obtener todas las playlists
   async findAll(idUsuario: number): Promise<Object> {
     try {
-      const playlists = await this.playlistRepository.find({ where: { usuario: { id: idUsuario } } })
-      return { data: playlists }
+      const playlists = await this.playlistRepository.find({
+        where: { usuario: { id: idUsuario } }, select: {
+          id: true,
+          titulo: true,
+          fechaCreacion: true,
+          generos: true,
+          urlImagen: true,
+          status: true
+        }
+      })
+
+      if (!playlists[0]) {
+        throw new NotFoundException(`El usuario con el id: ${idUsuario} no existe`)
+      }
+      return {
+        message: "Datos playlists",
+        statusCode: 200,
+        data: [playlists]
+      }
     } catch (err) {
       this.handleErrors(err)
     }
@@ -42,16 +59,19 @@ export class PlaylistService {
   async findOne(idUsuario: number, idPlaylist): Promise<Object> {
     try {
       const playlist = await this.playlistRepository.findOne({ where: { id: idPlaylist, usuario: { id: idUsuario } } });
-      return { data: playlist };
+
+      if (!playlist) {
+        throw new NotFoundException(`Playlist no encontrada`)
+      }
+
+      return {
+        message: "Datos playlist",
+        statusCode: 200,
+        data: playlist
+      };
     } catch (err) {
       this.handleErrors(err);
     }
-  }
-
-  // Actualizar una playlist
-  async update(id: number, playlist: Partial<Playlist>) {
-    await this.playlistRepository.update(id, playlist);
-    // return this.findOne(id);
   }
 
   // Eliminar una playlist
@@ -59,7 +79,11 @@ export class PlaylistService {
     try {
       const playlist = await this.playlistRepository.delete({ id: idPlaylist, usuario: { id: idUsuario } });
       if (playlist.affected !== 0) {
-        return { data: { "affected": playlist.affected } }
+        return {
+          message: "Playlist eliminada",
+          statusCode: 200,
+          data: { "affected": playlist.affected }
+        }
       } else {
         throw new NotFoundException(`Playlist con el id: ${idPlaylist} no existe`);
       }
@@ -72,6 +96,10 @@ export class PlaylistService {
     this.logger.error(err)
     if (err.code) {
       throw new BadRequestException(err.sqlMessage)
+    }
+
+    if (err.status === 404) {
+      throw new NotFoundException(err.response.message);
     }
   }
 }
