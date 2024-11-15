@@ -44,6 +44,14 @@ const response404 = {
     statusCode: 404
 }
 
+const responseUpdate = {
+    id: 18, 
+    titulo: "Nueva Playlist Actualizada", 
+    generos: ["Rock Actualizado", "Pop Actualizado"],
+    fechaCreacion: "2024-11-14T10:00:00.000Z",
+    urlImagen: "https://example.com/imagen.png",
+    status: true, 
+}
 
 //* Crear una playlist
 export const createPlaylistSummary: ApiOperationOptions = {
@@ -122,3 +130,37 @@ export const deletePlaylist404: ApiResponseOptions = {
         example: response404
     }
 }
+
+//* Actualizar una playlist de un usuario
+export const updatePlaylistSummary: ApiOperationOptions = {
+    summary: "Actualizar una playlist de un usuario",
+    description: "Permite actualizar el título y géneros de una playlist existente para un usuario.",
+};
+
+export const updatePlaylist200: ApiResponseOptions = {
+    status: 200,
+    description: "Playlist actualizada exitosamente",
+    schema: {
+        example: {
+            message: "Playlist actualizada",
+            statusCode: 200,
+            data: responseUpdate,
+        },
+    },
+};
+
+export const updatePlaylist400: ApiResponseOptions = {
+    status: 400,
+    description: "Bad Request",
+    schema: {
+        example: response400,
+    },
+};
+
+export const updatePlaylist404: ApiResponseOptions = {
+    status: 404,
+    description: "Not Found - Playlist no encontrada",
+    schema: {
+        example: response404,
+    },
+};

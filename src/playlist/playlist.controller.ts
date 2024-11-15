@@ -3,7 +3,7 @@ import { PlaylistService } from './playlist.service';
 import { Playlist } from '../entities/playlist.entity';
 import { CreatePlaylistDto } from './dto/create-playlist-dto';
 import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
-import { create201, create400, createPlaylistSummary, idUsuario, playlistsSumnary, playlistsUsuario200, playlistsUsuario404, idPlaylist, playlistSumnary, playlistUsuario200, playlistUsuario404, deletePlaylistSummary, deletePlaylist200, deletePlaylist404 } from './documentation/playlist-paths-options';
+import { create201, create400, createPlaylistSummary, idUsuario, playlistsSumnary, playlistsUsuario200, playlistsUsuario404, idPlaylist, playlistSumnary, playlistUsuario200, playlistUsuario404, deletePlaylistSummary, deletePlaylist200, deletePlaylist404, updatePlaylistSummary, updatePlaylist200, updatePlaylist400, updatePlaylist404 } from './documentation/playlist-paths-options';
 
 @Controller('usuarios/:idUsuario')
 export class PlaylistController {
@@ -58,4 +58,21 @@ export class PlaylistController {
     @Param('idPlaylist', ParseIntPipe) idPlaylist: number) {
     return this.playlistService.remove(idUsuario, idPlaylist);
   }
+
+  //* Actualizar una playlist de un usuario
+  @Put('playlists/:idPlaylist')
+  @ApiParam(idUsuario)
+  @ApiParam(idPlaylist)
+  @ApiOperation(updatePlaylistSummary)
+  @ApiResponse(updatePlaylist200)
+  @ApiResponse(updatePlaylist400)
+  @ApiResponse(updatePlaylist404)
+  update(
+    @Param('idUsuario', ParseIntPipe) idUsuario: number,
+    @Param('idPlaylist', ParseIntPipe) idPlaylist: number,
+    @Body() createPlaylistDto: CreatePlaylistDto,
+  ) {
+    return this.playlistService.update(idUsuario, idPlaylist, createPlaylistDto);
+  }
+
 }
