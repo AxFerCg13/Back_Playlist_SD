@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 
 import { CancionService } from './cancion.service';
-import { Cancion } from '../entities/cancion.entity';
 import { CreateCancionDto } from './dto/create-cancion.dto';
 
 @Controller('playlists/:idPlaylist/canciones')
@@ -27,11 +26,6 @@ export class CancionController {
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.cancionService.findOne(id);
-  }
-
-  @Put(':id')
-  update(@Param('id') id: number, @Body() cancion: Partial<Cancion>) {
-    return this.cancionService.update(id, cancion);
   }
 
   //* Eliminar una canción de una playlist

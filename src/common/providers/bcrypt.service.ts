@@ -7,4 +7,9 @@ export class BcryptService {
         const saltRounds = Math.floor(Math.random() * (15 - 10) + 10);
         return bcrypt.hash(plainPassword, saltRounds);
     }
+
+    checkPassword(loginPassword: string, password: string) {
+        const match = bcrypt.compareSync(loginPassword, password);
+        return match;
+    }
 }

@@ -1,26 +1,57 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { BadRequestException, Injectable, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { LoginUserDto } from './dto/loginUser.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Usuario } from 'src/entities/usuario.entity';
+import { Repository } from 'typeorm';
+import { BcryptService } from 'src/common/providers/bcrypt.service';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  private readonly logger = new Logger();
+  constructor(
+    @InjectRepository(Usuario)
+    private usuarioRepository: Repository<Usuario>,
+    private bcryptService: BcryptService
+  ) { }
+  async loginValidate(loginUserDto: LoginUserDto) {
+    try {
+      const { email, contrasena } = loginUserDto;
+      const usuario = await this.usuarioRepository.findOne({ where: { correo: email } })
+
+      if (!usuario) {
+        throw new NotFoundException(`Usuario o contraseña invalidos`);
+      }
+
+      if (usuario) {
+        const check = await this.bcryptService.checkPassword(contrasena, usuario.contrasena);
+        if (!check) {
+          throw new UnauthorizedException('Acceso denegado');
+        } else {
+          return {
+            message: "Acceso autorizado",
+            statusCode: 200,
+            data: {
+              validaton: true
+            }
+          }
+        }
+      }
+    } catch (err) {
+      this.handleErrors(err);
+    }
   }
 
-  findAll() {
-    return `This action returns all auth`;
+  private handleErrors(err: any) {
+    this.logger.error(err)
+    if (err.errno) {
+      throw new BadRequestException(err.sqlMessage);
+    }
+    if (err.response.statusCode === 404) {
+      throw new NotFoundException(err.response.message)
+    }
+    if (err.response.statusCode === 401) {
+      throw new UnauthorizedException(err.response.message)
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
-  }
 }

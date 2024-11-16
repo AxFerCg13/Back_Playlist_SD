@@ -38,12 +38,6 @@ export class CancionService {
     return this.cancionRepository.findOne({ where: { id } });
   }
 
-  // Actualizar una canción
-  async update(id: number, cancion: Partial<Cancion>): Promise<Cancion> {
-    await this.cancionRepository.update(id, cancion);
-    return this.findOne(id);
-  }
-
   // Eliminar una canción
   async remove(idPlaylist: number, idCancion: number): Promise<Object> {
     try {
