@@ -13,33 +13,36 @@ export class AuthService {
     private usuarioRepository: Repository<Usuario>,
     private bcryptService: BcryptService
   ) { }
+
   async loginValidate(loginUserDto: LoginUserDto) {
     try {
       const { email, contrasena } = loginUserDto;
-      const usuario = await this.usuarioRepository.findOne({ where: { correo: email } })
-
+      const usuario = await this.usuarioRepository.findOne({ where: { correo: email } });
+  
       if (!usuario) {
-        throw new NotFoundException(`Usuario o contraseña invalidos`);
+        throw new NotFoundException(`Usuario o contraseña inválidos`);
       }
-
-      if (usuario) {
-        const check = await this.bcryptService.checkPassword(contrasena, usuario.contrasena);
-        if (!check) {
-          throw new UnauthorizedException('Acceso denegado');
-        } else {
-          return {
-            message: "Acceso autorizado",
-            statusCode: 200,
-            data: {
-              validaton: true
-            }
-          }
-        }
+  
+      const check = await this.bcryptService.checkPassword(contrasena, usuario.contrasena);
+      if (!check) {
+        throw new UnauthorizedException('Acceso denegado');
       }
+  
+      // Respuesta incluyendo id, nombre y validation
+      return {
+        message: "Acceso autorizado",
+        statusCode: 200,
+        data: {
+          id: usuario.id,
+          nombre: usuario.nombre,
+          validation: true, // Se mantiene la validación
+        },
+      };
     } catch (err) {
       this.handleErrors(err);
     }
   }
+  
 
   private handleErrors(err: any) {
     this.logger.error(err)

@@ -12,7 +12,9 @@ export const login200: ApiResponseOptions = {
             message: "Acceso autorizado",
             statusCode: 200,
             data: {
-                validation: true
+                validation: true,
+                id: 1,
+                nombre: "Juan123"
             }
         }
     }
