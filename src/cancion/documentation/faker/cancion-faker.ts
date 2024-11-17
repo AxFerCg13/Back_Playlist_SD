@@ -3,10 +3,10 @@ import { faker } from '@faker-js/faker';
 const idCancion = faker.number.int({ max: 10000, min: 1 });
 export const nombre = faker.music.songName();
 export const artista = faker.music.artist();
-export const anioSalida = faker.date.between({ from: '1970-01-01', to: '2024-12-31' });
-const disco = faker.helpers.arrayElement([faker.music.album(), null]); // Puede ser nulo
+export const anioSalida = faker.date.between({ from: '1970-01-01', to: '2024-12-31' }).toISOString().split('T')[0];
+export const disco = faker.music.album();
 const fechaAgregada = faker.date.recent({ days: 30 });
-const playlistId = faker.number.int({ max: 1000, min: 1 }); // Relación con Playlist
+const playlistId = faker.number.int({ max: 1000, min: 1 });
 
 export const dataCancion = {
     idCancion,

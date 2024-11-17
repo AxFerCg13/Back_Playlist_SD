@@ -77,6 +77,7 @@ export const create400: ApiResponseOptions = {
 
 //* Retornar las playlist de un usuario
 export const playlistsSumnary: ApiOperationOptions = { summary: "Retornar las playlists de un usuario" }
+
 export const playlistsUsuario200: ApiResponseOptions = {
     status: 200,
     description: "Playlist de un usuario",

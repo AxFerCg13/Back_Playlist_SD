@@ -1,6 +1,5 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { PlaylistService } from './playlist.service';
-import { Playlist } from '../entities/playlist.entity';
 import { CreatePlaylistDto } from './dto/create-playlist-dto';
 import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { create201, create400, createPlaylistSummary, idUsuario, playlistsSumnary, playlistsUsuario200, playlistsUsuario404, idPlaylist, playlistSumnary, playlistUsuario200, playlistUsuario404, deletePlaylistSummary, deletePlaylist200, deletePlaylist404, updatePlaylistSummary, updatePlaylist200, updatePlaylist400, updatePlaylist404 } from './documentation/playlist-paths-options';
