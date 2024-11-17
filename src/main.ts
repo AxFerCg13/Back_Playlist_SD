@@ -16,6 +16,14 @@ async function bootstrap() {
       transform: false,
     }),
   );
+
+  // Habilitar CORS
+  app.enableCors({
+    origin: '*', // MODIFICAR POR EL LINK DEL FRONT DESPLEGADO
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Playlist API REST Docs')
     .setDescription('REST Api para el proyecto de Sistemas Distribuidos')

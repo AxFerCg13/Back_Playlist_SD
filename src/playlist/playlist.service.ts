@@ -113,6 +113,36 @@ export class PlaylistService {
     }
   }
 
+  // Actualizar una playlist
+  async update(idUsuario: number, idPlaylist: number, createPlaylistDto: CreatePlaylistDto): Promise<Object> {
+    try {
+      // Buscar la playlist que corresponde al usuario y al idPlaylist
+      const playlist = await this.playlistRepository.findOne({
+        where: { id: idPlaylist, usuario: { id: idUsuario } },
+      });
+
+      // Si la playlist no se encuentra, lanza una excepción
+      if (!playlist) {
+        throw new NotFoundException(`Playlist con el id: ${idPlaylist} no encontrada`);
+      }
+
+      // Actualiza los campos de la playlist
+      playlist.titulo = createPlaylistDto.titulo;
+      playlist.generos = createPlaylistDto.generos;
+
+      // Guarda los cambios
+      await this.playlistRepository.save(playlist);
+
+      return {
+        message: "Playlist actualizada",
+        statusCode: 200,
+        data: playlist,
+      };
+    } catch (err) {
+      this.handleErrors(err);
+    }
+  }
+
   handleErrors(err: any) {
     this.logger.error(err)
     if (err.code) {
