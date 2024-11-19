@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Playlist } from '../entities/playlist.entity';
 import { CreatePlaylistDto } from './dto/create-playlist-dto';
+import { AddCoverDto } from './dto/add-cover.dto';
 
 @Injectable()
 export class PlaylistService {
@@ -12,7 +13,7 @@ export class PlaylistService {
     private playlistRepository: Repository<Playlist>,
   ) { }
 
-  // Crear una nueva playlist
+  //* Crear una nueva playlist
   async create(idUsuario: number, createPlaylistDto: CreatePlaylistDto) {
     try {
       const playlist = this.playlistRepository.create({ ...createPlaylistDto, usuario: { id: idUsuario } });
@@ -23,6 +24,26 @@ export class PlaylistService {
         statusCode: 201,
         data: playlist
       };
+    } catch (err) {
+      this.handleErrors(err);
+    }
+  }
+
+  //* Agregar portada a una playlist
+  async addCover(idUsuario: number, idPlaylist: number, addCoverDto: AddCoverDto) {
+    try {
+      const playlist = await this.playlistRepository.update({ id: idPlaylist, usuario: { id: idUsuario } }, { urlImagen: addCoverDto.urlImagen },)
+
+      if (playlist.affected === 0) {
+        throw new NotFoundException(`Playlist con el id: ${idPlaylist} no existe`)
+      }
+      return {
+        message: "Portada agregada",
+        statusCode: 201,
+        data: {
+          affected: playlist.affected
+        }
+      }
     } catch (err) {
       this.handleErrors(err);
     }

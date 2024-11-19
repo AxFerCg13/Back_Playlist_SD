@@ -132,6 +132,33 @@ export const deletePlaylist404: ApiResponseOptions = {
     }
 }
 
+//* Añadir portada a una playlist
+export const addCover201: ApiResponseOptions = {
+    status: 201,
+    description: "Portada agregada",
+    schema: {
+        example: {
+            message: "Portada agregada",
+            statusCodE: 201,
+            data: {
+                affected: 1
+            }
+        }
+    }
+}
+
+export const addCover404: ApiResponseOptions = {
+    status: 404,
+    description: "Not Found",
+    schema: {
+        example: {
+            message: "Playlist con el id: no existe",
+            error: "Not Found",
+            statusCodE: 404,
+        }
+    }
+}
+
 //* Actualizar una playlist de un usuario
 export const updatePlaylistSummary: ApiOperationOptions = {
     summary: "Actualizar una playlist de un usuario",

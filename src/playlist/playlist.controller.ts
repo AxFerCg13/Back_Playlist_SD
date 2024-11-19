@@ -1,8 +1,9 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { PlaylistService } from './playlist.service';
 import { CreatePlaylistDto } from './dto/create-playlist-dto';
-import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
-import { create201, create400, createPlaylistSummary, idUsuario, playlistsSumnary, playlistsUsuario200, playlistsUsuario404, idPlaylist, playlistSumnary, playlistUsuario200, playlistUsuario404, deletePlaylistSummary, deletePlaylist200, deletePlaylist404, updatePlaylistSummary, updatePlaylist200, updatePlaylist400, updatePlaylist404 } from './documentation/playlist-paths-options';
+import { ApiConsumes, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { AddCoverDto } from './dto/add-cover.dto';
+import { create201, create400, createPlaylistSummary, idUsuario, playlistsSumnary, playlistsUsuario200, playlistsUsuario404, idPlaylist, playlistSumnary, playlistUsuario200, playlistUsuario404, deletePlaylistSummary, deletePlaylist200, deletePlaylist404, updatePlaylistSummary, updatePlaylist200, updatePlaylist400, updatePlaylist404, addCover201, addCover404 } from './documentation/playlist-paths-options';
 
 @Controller('usuarios/:idUsuario')
 export class PlaylistController {
@@ -18,6 +19,21 @@ export class PlaylistController {
     @Param('idUsuario', ParseIntPipe) idUsuario: number,
     @Body() createPlaylistDto: CreatePlaylistDto) {
     return this.playlistService.create(idUsuario, createPlaylistDto);
+  }
+
+  //* Agregar portada a una playlist
+  @Post('playlists/:idPlaylist')
+  @ApiParam(idUsuario)
+  @ApiParam(idPlaylist)
+  @ApiOperation({ summary: "Añadir portada a una playlist" })
+  @ApiResponse(addCover201)
+  @ApiResponse(addCover404)
+  addPlaylistCover(
+    @Param('idUsuario', ParseIntPipe) idUsuario: number,
+    @Param('idPlaylist', ParseIntPipe) idPlaylist: number,
+    @Body() addCoverDto: AddCoverDto
+  ) {
+    return this.playlistService.addCover(idUsuario, idPlaylist, addCoverDto);
   }
 
   //* Retornar las playlists de un usuario

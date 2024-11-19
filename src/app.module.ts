@@ -32,7 +32,7 @@ import { AuthModule } from './auth/auth.module';
     CommonModule,
     AuthModule,
   ],
-  controllers: [UsuarioController, PlaylistController, CancionController],
+  controllers: [PlaylistController, UsuarioController, CancionController],
   providers: [UsuarioService, PlaylistService, CancionService],
 })
 export class AppModule { }
