@@ -21,6 +21,12 @@ export class Cancion {
   @Column({ default: 'Active' })
   status: string;
 
+  @Column({ nullable: true })
+  urlImagen: string;
+
+  @Column({ default: false })
+  urlPreview: string;
+
   @Column({ type: 'date', default: () => 'CURRENT_DATE' })
   fechaAgregada: Date;
 

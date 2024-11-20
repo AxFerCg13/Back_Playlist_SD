@@ -22,4 +22,14 @@ export class CreateCancionDto {
     @IsString()
     @IsOptional()
     disco?: string;
+
+    @ApiProperty()
+    @IsString()
+    @IsOptional()
+    urlImagen?: string;
+
+    @ApiProperty()
+    @IsString()
+    @IsOptional()
+    urlPreview?: string;
 }
