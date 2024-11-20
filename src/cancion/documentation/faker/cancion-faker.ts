@@ -7,6 +7,8 @@ export const anioSalida = faker.date.between({ from: '1970-01-01', to: '2024-12-
 export const disco = faker.music.album();
 const fechaAgregada = faker.date.recent({ days: 30 });
 const playlistId = faker.number.int({ max: 1000, min: 1 });
+export const urlImagen = faker.internet.url();
+export const urlPreview = faker.internet.url();
 
 export const dataCancion = {
     idCancion,

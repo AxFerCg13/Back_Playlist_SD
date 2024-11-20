@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { nombreOptions, artistaOptions, anioSalidaOptions, discoOptions } from "../documentation/cancion-options";
+import { nombreOptions, artistaOptions, anioSalidaOptions, discoOptions, urlImagenOptions, urlPreviewOptions } from "../documentation/cancion-options";
 import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateCancionDto {
@@ -23,12 +23,12 @@ export class CreateCancionDto {
     @IsOptional()
     disco?: string;
 
-    @ApiProperty()
+    @ApiProperty(urlImagenOptions)
     @IsString()
     @IsOptional()
     urlImagen?: string;
 
-    @ApiProperty()
+    @ApiProperty(urlPreviewOptions)
     @IsString()
     @IsOptional()
     urlPreview?: string;

@@ -1,5 +1,5 @@
 import { ApiPropertyOptions } from "@nestjs/swagger/dist/decorators/api-property.decorator";
-import { nombre, artista, anioSalida, disco } from "./faker/cancion-faker";
+import { nombre, artista, anioSalida, disco, urlImagen, urlPreview } from "./faker/cancion-faker";
 
 export const nombreOptions: ApiPropertyOptions = {
     title: "Título de la canción",
@@ -29,3 +29,19 @@ export const discoOptions: ApiPropertyOptions = {
     example: disco,
 };
 
+export const urlImagenOptions: ApiPropertyOptions = {
+    title: "Url de la imagen de la canción",
+    description: "Enlace de la imagen de la canción",
+    type: "string",
+    nullable: true,
+    example: urlImagen
+}
+
+
+export const urlPreviewOptions: ApiPropertyOptions = {
+    title: "Url de la preview de la canción",
+    description: "Enlace a una vista previa de la canción",
+    type: "string",
+    nullable: true,
+    example: urlPreview
+};
