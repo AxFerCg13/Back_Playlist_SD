@@ -18,5 +18,7 @@ export const dataCancion = {
     disco,
     status: "Active",
     fechaAgregada,
+    urlImagen,
+    urlPreview,
     playlistId,
 };
